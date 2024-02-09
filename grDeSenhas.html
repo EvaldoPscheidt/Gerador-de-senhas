@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Senhas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+label {
+    margin-left: 5px;
+}
+
+#result {
+    margin-top: 20px;
+    font-weight: bold;
+}
+</style>
+
+<body>
+    <div class="container">
+        <h2>Gerador de Senhas</h2>
+        <div class="form-group">
+            <label for="length">Comprimento da Senha:</label>
+            <input type="number" id="length" value="12" min="4" max="20">
+        </div>
+        <div class="form-group">
+            <input type="checkbox" id="uppercase" checked>
+            <label for="uppercase">Incluir Letras Maiúsculas</label>
+        </div>
+        <div class="form-group">
+            <input type="checkbox" id="numbers" checked>
+            <label for="numbers">Incluir Números</label>
+        </div>
+        <div class="form-group">
+            <input type="checkbox" id="symbols" checked>
+            <label for="symbols">Incluir Símbolos</label>
+        </div>
+        <button onclick="gerarSenha()">Gerar Senha</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function gerarSenha() {
+            const comprimento = document.getElementById('length').value;
+            const incluirMaiusculas = document.getElementById('uppercase').checked;
+            const incluirNumeros = document.getElementById('numbers').checked;
+            const incluirSimbolos = document.getElementById('symbols').checked;
+
+            const caracteresMinusculos = 'abcdefghijklmnopqrstuvwxyz';
+            const caracteresMaiusculos = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const caracteresNumeros = '0123456789';
+            const caracteresSimbolos = '!@#$%^&*()_+-=[]{}|;:\'",.<>/?';
+
+            let caracteres = caracteresMinusculos;
+            if (incluirMaiusculas) caracteres += caracteresMaiusculos;
+            if (incluirNumeros) caracteres += caracteresNumeros;
+            if (incluirSimbolos) caracteres += caracteresSimbolos;
+
+            let senha = '';
+            for (let i = 0; i < comprimento; i++) {
+                const indiceAleatorio = Math.floor(Math.random() * caracteres.length);
+                senha += caracteres[indiceAleatorio];
+            }
+
+            document.getElementById('result').textContent = `Senha Gerada: ${senha}`;
+        }
+    </script>
+</body>
+</html>
